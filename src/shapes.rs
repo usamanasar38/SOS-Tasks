@@ -96,3 +96,22 @@ impl Circle {
 // TODO: Implement the Shape trait for both Rectangle and Circle structs.
 // 
 // Hint: Use std::f64::consts::PI to calculate the area and circumference of the circle.
+impl Shape for Rectangle {
+    fn area(&self) -> f64 {
+        self.width * self.height
+    }
+
+    fn perimeter(&self) -> f64 {
+        2.0 * (self.width + self.height)
+    }
+}
+
+impl Shape for Circle {
+    fn area(&self) -> f64 {
+        std::f64::consts::PI * self.radius * self.radius
+    }
+
+    fn perimeter(&self) -> f64 {
+        2.0 * std::f64::consts::PI * self.radius
+    }
+}
