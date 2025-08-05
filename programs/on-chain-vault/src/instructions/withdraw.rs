@@ -11,6 +11,7 @@
 ///-------------------------------------------------------------------------------
 
 use anchor_lang::prelude::*;
+use anchor_lang::solana_program::program::invoke;
 use crate::state::Vault;
 use crate::errors::VaultError;
 use crate::events::WithdrawEvent;
@@ -47,4 +48,18 @@ pub fn _withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
         &user.key(),
         amount,
     );
+
+    invoke(&transfer_instruction, &[
+        vault.to_account_info(),
+        user.to_account_info(),
+        ctx.accounts.system_program.to_account_info(),
+    ])?;
+
+
+    emit!(WithdrawEvent {
+        amount,
+        vault_authority: vault.vault_authority,
+        vault: vault.key(),
+    });
+    Ok(())
 }
