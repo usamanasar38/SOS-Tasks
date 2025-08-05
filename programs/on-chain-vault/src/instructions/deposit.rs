@@ -21,14 +21,7 @@ use crate::events::DepositEvent;
 pub struct Deposit<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
-    #[account(
-        init, 
-        payer = user, 
-        // space = discriminant + account size
-        space = 8 + Vault::INIT_SPACE,
-        seeds = [b"vault", user.key().as_ref()],
-        bump
-    )]
+    #[account(mut)]
     pub vault: Account<'info, Vault>,
     pub system_program: Program<'info, System>,
 }
@@ -50,11 +43,15 @@ pub fn _deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
         amount,
     );
 
-    invoke(&transfer_instruction, &[
+    match  invoke(&transfer_instruction, &[
         user.to_account_info(),
         vault.to_account_info(),
         ctx.accounts.system_program.to_account_info(),
-    ])?;
+    ]) {
+        Ok(_) => (),
+        Err(e) => return Err(e.into()),
+        
+    };
 
 
     emit!(DepositEvent {
