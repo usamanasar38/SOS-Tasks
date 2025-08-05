@@ -40,5 +40,11 @@ pub fn _withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
 
     // Verify that the vault has enough balance to withdraw
     require!(vault.get_lamports() >= amount, VaultError::InsufficientBalance);
-    
+
+    // Transfer lamports from vault to vault authority
+    let transfer_instruction = anchor_lang::solana_program::system_instruction::transfer(
+        &vault.key(),
+        &user.key(),
+        amount,
+    );
 }
