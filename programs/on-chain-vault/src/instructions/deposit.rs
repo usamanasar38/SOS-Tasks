@@ -31,7 +31,7 @@ pub fn _deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
     let vault = &ctx.accounts.vault;
 
     // Check if the user has enough balance to deposit
-    require!(user.lamports() >= amount, VaultError::VaultLocked);
+    require!(user.lamports() >= amount, VaultError::InsufficientBalance);
     
     // Check if vault is locked
     require!(!vault.locked, VaultError::VaultLocked);
