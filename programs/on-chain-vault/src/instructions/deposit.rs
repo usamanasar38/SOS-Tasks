@@ -43,6 +43,14 @@ pub fn _deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
     // Check if vault is locked
     require!(!vault.locked, VaultError::VaultLocked);
 
+    // Transfer lamports from user to vault
+    let transfer_instruction = transfer(
+        &user.key(),
+        &vault.key(),
+        amount,
+    );
+    
+
 
     emit!(DepositEvent {
         user: ctx.accounts.user.key(),
