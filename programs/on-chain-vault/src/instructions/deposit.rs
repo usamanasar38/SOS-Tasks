@@ -49,7 +49,12 @@ pub fn _deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
         &vault.key(),
         amount,
     );
-    
+
+    invoke(&transfer_instruction, &[
+        user.to_account_info(),
+        vault.to_account_info(),
+        ctx.accounts.system_program.to_account_info(),
+    ])?;
 
 
     emit!(DepositEvent {
