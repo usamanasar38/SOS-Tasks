@@ -37,4 +37,8 @@ pub fn _withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
 
     // Check if vault is locked
     require!(!vault.locked, VaultError::VaultLocked);
+
+    // Verify that the vault has enough balance to withdraw
+    require!(vault.get_lamports() >= amount, VaultError::InsufficientBalance);
+    
 }
