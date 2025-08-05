@@ -32,6 +32,9 @@ pub struct Withdraw<'info> {
 }
 
 pub fn _withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
-    // TODO: Implement withdraw functionality
-    todo!()
+    let user = &ctx.accounts.vault_authority;
+    let vault = &ctx.accounts.vault;
+
+    // Check if vault is locked
+    require!(!vault.locked, VaultError::VaultLocked);
 }
