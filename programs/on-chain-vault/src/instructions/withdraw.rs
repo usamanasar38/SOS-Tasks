@@ -12,6 +12,7 @@
 
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::program::invoke;
+use anchor_lang::solana_program::system_instruction::transfer;
 use crate::state::Vault;
 use crate::errors::VaultError;
 use crate::events::WithdrawEvent;
@@ -33,20 +34,23 @@ pub fn _withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
     require!(!vault.locked, VaultError::VaultLocked);
 
     // Verify that the vault has enough balance to withdraw
-    require!(vault.get_lamports() >= amount, VaultError::InsufficientBalance);
+    require!(vault.get_lamports() < amount, VaultError::InsufficientBalance);
 
     // Transfer lamports from vault to vault authority
-    let transfer_instruction = anchor_lang::solana_program::system_instruction::transfer(
+    let transfer_instruction = transfer(
         &vault.key(),
         &user.key(),
         amount,
     );
 
-    invoke(&transfer_instruction, &[
+    match invoke(&transfer_instruction, &[
         vault.to_account_info(),
         user.to_account_info(),
         ctx.accounts.system_program.to_account_info(),
-    ])?;
+    ]) {
+        Ok(_) => (),
+        Err(e) => return Err(e.into()),
+    };
 
 
     emit!(WithdrawEvent {

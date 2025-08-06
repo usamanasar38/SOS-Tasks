@@ -17,14 +17,7 @@ use crate::events::ToggleLockEvent;
 pub struct ToggleLock<'info> {
     #[account(mut)]
     pub vault_authority: Signer<'info>,
-    #[account(
-        init, 
-        payer = vault_authority, 
-        // space = discriminant + account size
-        space = 8 + Vault::INIT_SPACE,
-        seeds = [b"vault", vault_authority.key().as_ref()],
-        bump
-    )]
+    #[account(mut)]
     pub vault: Account<'info, Vault>,
     pub system_program: Program<'info, System>,
 }
