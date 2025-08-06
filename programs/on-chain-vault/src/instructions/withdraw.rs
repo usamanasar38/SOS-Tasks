@@ -13,9 +13,6 @@ use crate::state::Vault;
 ///
 ///-------------------------------------------------------------------------------
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program::program::{invoke, invoke_signed};
-use anchor_lang::solana_program::system_instruction::transfer;
-use anchor_lang::system_program::Transfer;
 
 #[derive(Accounts)]
 pub struct Withdraw<'info> {
