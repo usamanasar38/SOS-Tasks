@@ -1,50 +1,38 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/2adYzivg)
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/svk2qxeF)
 ![School of Solana](https://github.com/Ackee-Blockchain/school-of-solana/blob/master/.banner/banner.png?raw=true)
 
-Welcome to **Task 3** of the **School of Solana Season 7**.
+Welcome to **Task 2** of the **School of Solana Season 7**.
 
-## 📚Task 3
-In the previous tasks, you were introduced to Solana basics and Rust. The goal of this 
-task is to connect these elements and work with Rust on Solana. You will become familiar 
-with the basic structure of Solana programs and learn how programming on Solana is done.
+## 📚Task 2
+This task introduces you to the Rust programming language, which is used extensively in the Solana ecosystem. Understanding Rust is important for Solana development since most programs are written in this language.
 
-You'll implement an **on-chain vault program** that allows users to deposit SOL, withdraw SOL (if they're the vault authority), and toggle the vault's lock state. The vault demonstrates core Solana concepts including **Program Derived Addresses (PDAs)**, **Cross-Program Invocations (CPIs)**, **account validation**, and **state management**.
+You'll work on **two parts**: implementing geometric shapes with validation and trait implementations, then building a calculator with arithmetic operations and history tracking. The calculator includes overflow and underflow handling, which is important in blockchain programming. Both components cover core Rust concepts including **structs**, **enums**, **traits**, and **error handling**.
 
-## Task Overview
+## Part 1: Shapes
 
-Your task is to complete the implementation of three key instructions in the vault program:
+Begin with this section to learn Rust fundamentals. Complete the implementation of methods marked with `todo!()` and implement the `Shape` trait for `Rectangle` and `Circle` structs. This covers input validation, error handling, and trait implementation.
 
-- **`deposit`** - Allow users to deposit SOL into any vault (if unlocked)
-- **`withdraw`** - Allow vault authorities to withdraw SOL from their vaults (if unlocked)  
-- **`toggle_lock`** - Allow vault authorities to lock/unlock their vaults
+## Part 2: Calculator
 
-The `initialize` instruction is fully implemented and serves as a reference for understanding Anchor patterns and Solana program structure.
+This section involves building a calculator with arithmetic operations. Complete all methods marked with `todo!()` to create a calculator that performs operations, maintains history, and handles overflow conditions.
 
 ## Project Structure
 
-Your workspace contains these key files in the `programs/on-chain-vault/src` directory:
+Your workspace contains these key files in the `src` directory:
 
-- **`lib.rs`** - Main program module with task instructions
-- **`instructions/`** - Instruction implementations
-  - **`initialize.rs`** - Reference implementation
-  - **`deposit.rs`** - Deposit implementation
-  - **`withdraw.rs`** - Withdraw implementation
-  - **`toggle_lock.rs`** - Toggle lock implementation
-- **`state.rs`** - Vault account structure
-- **`errors.rs`** - Custom error definitions
-- **`events.rs`** - Event definitions
+- **`main.rs`** - Contains usage examples (no modifications needed)
+- **`tests.rs`** - Test suite for validating your implementation  
+- **`calculator.rs`** - Calculator implementation tasks
+- **`shapes.rs`** - Shapes implementation tasks
 
 ## Submission Process
 
-1. Complete the **TODO sections** in the instruction files.
-2. Test your solution using the provided test suite.
+1. Complete the **Shapes** and **Calculator** implementation.
+2. Test your solution with the provided test suite.
 3. To submit your answers, push your changes to the **main** branch in **this** repository.
 
->[!IMPORTANT]
->**Only modify code where you find TODO comments.** Do not commit changes to other files as it can make the evaluation process more difficult.
-
 ### Deadline
-The deadline for this task is **Wednesday, August 6th, at 23:59 UTC**.
+The deadline for this task is **Wednesday, July 30th, at 23:59 UTC**.
 
 >[!CAUTION]
 >Note that we will not accept submissions after the deadline.
@@ -54,49 +42,41 @@ The deadline for this task is **Wednesday, August 6th, at 23:59 UTC**.
 >[!IMPORTANT]
 >Your submission must pass **100%** of the provided test suite in order to pass this task.
 
+>[!NOTE]
+>We account for potential floating-point precision issues in geometric calculations. If your mathematical formulas are correct but tests fail due to precision, we'll review your implementation manually.
+
 ## Getting Started
 
 ### Prerequisites
-For this task you need:
-- [Rust installed](https://www.rust-lang.org/tools/install)
-    - Make sure to use stable version:
-    ```bash
-    rustup default stable
-    ```
-- [Solana installed](https://docs.solana.com/cli/install-solana-cli-tools)
-    - Use v2.2.12
-    - After you have Solana-CLI installed, you can switch between versions using:
-    ```bash
-    agave-install init 2.2.12
-    ```
-
-- [Anchor installed](https://www.anchor-lang.com/docs/installation)
-    - Use v0.31.1
-    - After you have Anchor installed, you can switch between versions using:
-    ```bash
-    avm use 0.31.1
-    ```
+Install [Rust](https://www.rust-lang.org/tools/install) to begin development.
 
 ### Development Commands
 
-**Install dependencies:**
-```bash
-yarn install
-```
-
 **Build the project:**
 ```bash
-anchor build
+cargo build
+```
+
+**Run the examples:**
+```bash
+cargo run
 ```
 
 **Test your implementation:**
 ```bash
-anchor test
+cargo test
 ```
 
 ### Hints and Useful Links
+[Primitive Type i64](https://doc.rust-lang.org/std/primitive.i64.html)
 
-[Anchor Framework Documentation](https://www.anchor-lang.com/)
+[Traits](https://doc.rust-lang.org/book/ch10-02-traits.html)
+
+[References and Borrowing](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html?highlight=borrow#references-and-borrowing)
+
+[Structs](https://doc.rust-lang.org/book/ch05-01-defining-structs.html)
+
+[Options](https://doc.rust-lang.org/std/option/)
 
 -----
 
