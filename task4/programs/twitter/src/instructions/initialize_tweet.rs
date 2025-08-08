@@ -21,8 +21,8 @@ pub fn initialize_tweet(
     topic: String,
     content: String,
 ) -> Result<()> {
-    // TODO: Implement initialize tweet functionality
-    todo!()
+    require!(topic.len() <= TOPIC_LENGTH, TwitterError::TopicTooLong);
+    require!(content.len() <= COMMENT_LENGTH, TwitterError::ContentTooLong);
 }
 
 #[derive(Accounts)]
