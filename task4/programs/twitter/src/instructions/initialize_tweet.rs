@@ -23,6 +23,18 @@ pub fn initialize_tweet(
 ) -> Result<()> {
     require!(topic.len() <= TOPIC_LENGTH, TwitterError::TopicTooLong);
     require!(content.len() <= COMMENT_LENGTH, TwitterError::ContentTooLong);
+
+    let author: &Signer = &ctx.accounts.tweet_authority;
+
+    let tweet = &mut ctx.accounts.tweet;
+
+    tweet.tweet_author = author.key();
+    tweet.topic = topic;
+    tweet.content = content;
+    tweet.likes = 0;
+    tweet.dislikes = 0;
+    tweet.bump = ctx.bumps.tweet;
+    Ok(())
 }
 
 #[derive(Accounts)]
