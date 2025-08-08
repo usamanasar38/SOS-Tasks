@@ -22,9 +22,22 @@ pub fn add_reaction(ctx: Context<AddReactionContext>, reaction: ReactionType) ->
 
 #[derive(Accounts)]
 pub struct AddReactionContext<'info> {
-    // TODO: Add required account constraints
+    #[account(mut)]
     pub reaction_author: Signer<'info>,
+    #[account(
+        init, 
+        payer = reaction_author, 
+        // space = discriminant + account size
+        space = 8 + Reaction::INIT_SPACE,
+        seeds = [
+            b"tweet_reaction",
+            reaction_author.key().as_ref(),
+            tweet.key().as_ref(),
+        ],
+        bump
+    )]
     pub tweet_reaction: Account<'info, Reaction>,
+    #[account(mut)]
     pub tweet: Account<'info, Tweet>,
     pub system_program: Program<'info, System>,
 }
