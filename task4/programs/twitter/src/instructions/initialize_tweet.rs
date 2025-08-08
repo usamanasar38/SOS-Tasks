@@ -28,8 +28,19 @@ pub fn initialize_tweet(
 #[derive(Accounts)]
 #[instruction(topic: String)]
 pub struct InitializeTweet<'info> {
-    // TODO: Add required account constraints
+    #[account(mut)]
     pub tweet_authority: Signer<'info>,
+    #[account(
+        init, 
+        payer = tweet_authority, 
+        // space = discriminant + account size
+        space = 8 + Tweet::INIT_SPACE,
+        seeds = [
+            b"tweet",
+            tweet_authority.key().as_ref()
+        ],
+        bump
+    )]
     pub tweet: Account<'info, Tweet>,
     pub system_program: Program<'info, System>,
 }
