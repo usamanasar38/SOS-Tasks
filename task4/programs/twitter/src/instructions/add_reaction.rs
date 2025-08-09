@@ -16,8 +16,14 @@ use crate::errors::TwitterError;
 use crate::states::*;
 
 pub fn add_reaction(ctx: Context<AddReactionContext>, reaction: ReactionType) -> Result<()> {
-    require!(topic.len() <= TOPIC_LENGTH, TwitterError::TopicTooLong);
-    require!(content.len() <= COMMENT_LENGTH, TwitterError::ContentTooLong);
+    let reaction_author: &Signer = &ctx.accounts.reaction_author;
+    let tweet = &mut ctx.accounts.tweet;
+
+    let tweet_reaction = &mut ctx.accounts.tweet_reaction;
+    tweet_reaction.reaction_author = reaction_author.key();
+    tweet_reaction.reaction = reaction;
+    tweet_reaction.parent_tweet = tweet.key();
+    tweet_reaction.bump = ctx.bumps.tweet_reaction;
 }
 
 #[derive(Accounts)]
