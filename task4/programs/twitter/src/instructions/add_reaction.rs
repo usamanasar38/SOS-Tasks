@@ -28,9 +28,11 @@ pub fn add_reaction(ctx: Context<AddReactionContext>, reaction: ReactionType) ->
     // Increment the appropriate counter based on reaction type
     match tweet_reaction.reaction {
         ReactionType::Like => {
+            require!(tweet.likes < u64::MAX, TwitterError::MaxLikesReached);
             tweet.likes += 1;
         },
         ReactionType::Dislike => {
+            require!(tweet.dislikes < u64::MAX, TwitterError::MaxLikesReached);
             tweet.dislikes += 1;
         },
     }
