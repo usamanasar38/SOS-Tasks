@@ -16,8 +16,8 @@ use crate::errors::TwitterError;
 use crate::states::*;
 
 pub fn add_reaction(ctx: Context<AddReactionContext>, reaction: ReactionType) -> Result<()> {
-    // TODO: Implement add reaction functionality
-    todo!()
+    require!(topic.len() <= TOPIC_LENGTH, TwitterError::TopicTooLong);
+    require!(content.len() <= COMMENT_LENGTH, TwitterError::ContentTooLong);
 }
 
 #[derive(Accounts)]
