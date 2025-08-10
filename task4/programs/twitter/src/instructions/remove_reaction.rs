@@ -17,6 +17,18 @@ use crate::states::*;
 pub fn remove_reaction(ctx: Context<RemoveReactionContext>) -> Result<()> {
     let tweet = &mut ctx.accounts.tweet;
     let tweet_reaction = &ctx.accounts.tweet_reaction;
+
+
+    // Increment the appropriate counter based on reaction type
+    match tweet_reaction.reaction {
+        ReactionType::Like => {
+            tweet.likes -= 1;
+        },
+        ReactionType::Dislike => {
+            tweet.dislikes -= 1;
+        },
+    }
+    Ok(())
 }
 
 #[derive(Accounts)]
