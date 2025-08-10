@@ -23,8 +23,20 @@ pub fn add_comment(ctx: Context<AddCommentContext>, comment_content: String) -> 
 #[derive(Accounts)]
 #[instruction(comment_content: String)]
 pub struct AddCommentContext<'info> {
-    // TODO: Add required account constraints
     pub comment_author: Signer<'info>,
+    #[account(
+        init, 
+        payer = comment_author, 
+        // space = discriminant + account size
+        space = 8 + Comment::INIT_SPACE,
+        seeds = [
+            b"comment",
+            comment_author.key().as_ref(),
+            comment_content.as_bytes().as_ref(),
+            tweet.key().as_ref()
+        ],
+        bump
+    )]
     pub comment: Account<'info, Comment>,
     pub tweet: Account<'info, Tweet>,
     pub system_program: Program<'info, System>,
