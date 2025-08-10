@@ -21,8 +21,20 @@ pub fn remove_reaction(ctx: Context<RemoveReactionContext>) -> Result<()> {
 
 #[derive(Accounts)]
 pub struct RemoveReactionContext<'info> {
-    // TODO: Add required account constraints
+    #[account(mut)]
     pub reaction_author: Signer<'info>,
+    #[account(
+        mut,
+        payer = reaction_author, // Close the comment account and return rent to the author
+        constraint = tweet_reaction.reaction_author == reaction_author.key(), // Ensure the comment belongs to the author
+        seeds = [
+            b"tweet_reaction",
+            reaction_author.key().as_ref(),
+            tweet.key().as_ref(),
+        ],
+        bump
+    )]
     pub tweet_reaction: Account<'info, Reaction>,
+    #[account(mut)]
     pub tweet: Account<'info, Tweet>,
 }
