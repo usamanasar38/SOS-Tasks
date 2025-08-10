@@ -15,8 +15,8 @@ use crate::errors::TwitterError;
 use crate::states::*;
 
 pub fn remove_reaction(ctx: Context<RemoveReactionContext>) -> Result<()> {
-    // TODO: Implement remove reaction functionality
-    todo!()
+    let tweet = &mut ctx.accounts.tweet;
+    let tweet_reaction = &ctx.accounts.tweet_reaction;
 }
 
 #[derive(Accounts)]
