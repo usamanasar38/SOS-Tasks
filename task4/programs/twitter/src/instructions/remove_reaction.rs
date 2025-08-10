@@ -22,9 +22,11 @@ pub fn remove_reaction(ctx: Context<RemoveReactionContext>) -> Result<()> {
     // Increment the appropriate counter based on reaction type
     match tweet_reaction.reaction {
         ReactionType::Like => {
+            require!(tweet.likes > 0, TwitterError::MinLikesReached);
             tweet.likes -= 1;
         },
         ReactionType::Dislike => {
+            require!(tweet.dislikes > 0, TwitterError::MinDislikesReached);
             tweet.dislikes -= 1;
         },
     }
