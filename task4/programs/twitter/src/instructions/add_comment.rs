@@ -16,6 +16,8 @@ use crate::errors::TwitterError;
 use crate::states::*;
 
 pub fn add_comment(ctx: Context<AddCommentContext>, comment_content: String) -> Result<()> {
+    require!(comment_content.len() <= COMMENT_LENGTH, TwitterError::CommentTooLong);
+
     let comment_author = &ctx.accounts.comment_author;
     let tweet = &ctx.accounts.tweet;
 
