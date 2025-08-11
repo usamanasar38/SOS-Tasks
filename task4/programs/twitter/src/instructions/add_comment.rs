@@ -11,7 +11,7 @@
 ///-------------------------------------------------------------------------------
 
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program::blake3::hash;
+use anchor_lang::solana_program::hash::hash;
 
 use crate::errors::TwitterError;
 use crate::states::*;
