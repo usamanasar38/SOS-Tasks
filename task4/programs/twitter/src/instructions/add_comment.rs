@@ -23,6 +23,7 @@ pub fn add_comment(ctx: Context<AddCommentContext>, comment_content: String) -> 
 #[derive(Accounts)]
 #[instruction(comment_content: String)]
 pub struct AddCommentContext<'info> {
+    #[account(mut)]
     pub comment_author: Signer<'info>,
     #[account(
         init, 
@@ -38,6 +39,7 @@ pub struct AddCommentContext<'info> {
         bump
     )]
     pub comment: Account<'info, Comment>,
+    #[account(mut)]
     pub tweet: Account<'info, Tweet>,
     pub system_program: Program<'info, System>,
 }
