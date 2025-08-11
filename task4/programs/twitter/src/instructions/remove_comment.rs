@@ -21,7 +21,19 @@ pub fn remove_comment(_ctx: Context<RemoveCommentContext>) -> Result<()> {
 
 #[derive(Accounts)]
 pub struct RemoveCommentContext<'info> {
-    // TODO: Add required account constraints
+    #[account(mut)]
     pub comment_author: Signer<'info>,
+    #[account(
+        mut,
+        close = comment_author, // Close the comment account and return rent to the author
+        constraint = comment.comment_author == comment_author.key(), // Ensure the comment belongs to the author
+        seeds = [
+            b"comment",,
+            comment_author.key().as_ref(),
+            comment.content.as_bytes().as_ref(), // Use content hash for unique identification
+            comment.parent_tweet.key().as_ref(),
+        ],
+        bump
+    )]
     pub comment: Account<'info, Comment>,
 }
