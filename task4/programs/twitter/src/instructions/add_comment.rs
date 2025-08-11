@@ -16,8 +16,15 @@ use crate::errors::TwitterError;
 use crate::states::*;
 
 pub fn add_comment(ctx: Context<AddCommentContext>, comment_content: String) -> Result<()> {
-    // TODO: Implement add comment functionality
-    todo!()
+    let comment_author = &ctx.accounts.comment_author;
+    let tweet = &ctx.accounts.tweet;
+
+    let comment = &mut ctx.accounts.comment;
+    comment.comment_author = comment_author.key();
+    comment.content = comment_content;
+    comment.parent_tweet = tweet.key();
+    comment.bump = ctx.bumps.comment;
+    Ok(())
 }
 
 #[derive(Accounts)]
