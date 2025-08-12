@@ -49,7 +49,7 @@ pub struct AddReactionContext<'info> {
         // space = discriminant + account size
         space = 8 + Reaction::INIT_SPACE,
         seeds = [
-            b"tweet_reaction",
+            TWEET_REACTION_SEED.as_bytes(),
             reaction_author.key().as_ref(),
             tweet.key().as_ref(),
         ],
