@@ -30,7 +30,7 @@ pub struct RemoveCommentContext<'info> {
         seeds = [
             b"comment",,
             comment_author.key().as_ref(),
-            comment.content.as_bytes().as_ref(), // Use content hash for unique identification
+            {hash(comment.content.as_bytes()).to_bytes().as_ref()}, // Use content hash for unique identification
             comment.parent_tweet.key().as_ref(),
         ],
         bump
