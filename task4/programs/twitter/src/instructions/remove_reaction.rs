@@ -42,7 +42,7 @@ pub struct RemoveReactionContext<'info> {
         payer = reaction_author, // Close the comment account and return rent to the author
         constraint = tweet_reaction.reaction_author == reaction_author.key(), // Ensure the comment belongs to the author
         seeds = [
-            b"tweet_reaction",
+            TWEET_REACTION_SEED.as_bytes(),
             reaction_author.key().as_ref(),
             tweet.key().as_ref(),
         ],
