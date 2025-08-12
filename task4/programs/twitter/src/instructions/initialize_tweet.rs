@@ -48,7 +48,8 @@ pub struct InitializeTweet<'info> {
         // space = discriminant + account size
         space = 8 + Tweet::INIT_SPACE,
         seeds = [
-            b"tweet",
+            TWEET_SEED.as_bytes(),
+            topic.as_bytes(),
             tweet_authority.key().as_ref()
         ],
         bump
