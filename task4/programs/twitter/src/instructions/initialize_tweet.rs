@@ -23,7 +23,6 @@ pub fn initialize_tweet(
 ) -> Result<()> {
     require!(topic.len() <= TOPIC_LENGTH, TwitterError::TopicTooLong);
     require!(content.len() <= COMMENT_LENGTH, TwitterError::ContentTooLong);
-
     let author: &Signer = &ctx.accounts.tweet_authority;
 
     let tweet = &mut ctx.accounts.tweet;
@@ -45,11 +44,10 @@ pub struct InitializeTweet<'info> {
     #[account(
         init, 
         payer = tweet_authority, 
-        // space = discriminant + account size
         space = 8 + Tweet::INIT_SPACE,
         seeds = [
-            TWEET_SEED.as_bytes(),
             topic.as_bytes(),
+            TWEET_SEED.as_bytes(),
             tweet_authority.key().as_ref()
         ],
         bump
