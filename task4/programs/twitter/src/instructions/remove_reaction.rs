@@ -39,7 +39,7 @@ pub struct RemoveReactionContext<'info> {
     pub reaction_author: Signer<'info>,
     #[account(
         mut,
-        payer = reaction_author, // Close the comment account and return rent to the author
+        close = reaction_author, // Close the comment account and return rent to the author
         constraint = tweet_reaction.reaction_author == reaction_author.key(), // Ensure the comment belongs to the author
         seeds = [
             TWEET_REACTION_SEED.as_bytes(),
