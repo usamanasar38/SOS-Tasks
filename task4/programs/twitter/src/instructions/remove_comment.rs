@@ -28,7 +28,7 @@ pub struct RemoveCommentContext<'info> {
         close = comment_author, // Close the comment account and return rent to the author
         constraint = comment.comment_author == comment_author.key(), // Ensure the comment belongs to the author
         seeds = [
-            b"comment",,
+            COMMENT_SEED.as_bytes(),
             comment_author.key().as_ref(),
             {hash(comment.content.as_bytes()).to_bytes().as_ref()}, // Use content hash for unique identification
             comment.parent_tweet.key().as_ref(),
